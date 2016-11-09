@@ -101,5 +101,13 @@ public class Persona extends BaseModel {
         VETERINARIO,
     }
 
+    /**
+     * Controles
+     */
+    @Getter
+    @Setter
+    @OneToMany
+    @OrderBy("fecha")
+    private List<Control> controles;
 
 }
