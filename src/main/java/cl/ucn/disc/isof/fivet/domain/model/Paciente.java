@@ -38,6 +38,14 @@ public class Paciente extends BaseModel {
     private String nombre;
 
     /**
+     * Especie
+     */
+    @Getter
+    @Setter
+    @Column
+    private String especie;
+
+    /**
      * Fecha de nacimiento
      */
     @Getter

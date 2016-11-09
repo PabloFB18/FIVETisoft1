@@ -63,6 +63,34 @@ public class Persona extends BaseModel {
     private List<Paciente> pacientes;
 
     /**
+     * Direccion
+     */
+    @Getter
+    @Setter
+    private String direccion;
+
+    /**
+     * Fijo
+     */
+    @Getter
+    @Setter
+    private String fijo;
+
+    /**
+     * Movil
+     */
+    @Getter
+    @Setter
+    private String movil;
+
+    /**
+     * Email
+     */
+    @Getter
+    @Setter
+    private String email;
+
+    /**
      * Tipo de rol
      */
     public enum Tipo {
