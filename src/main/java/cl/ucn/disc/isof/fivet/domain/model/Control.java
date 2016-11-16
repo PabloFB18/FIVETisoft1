@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import com.durrutia.ebean.BaseModel;
 
+import javax.persistence.Column;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class Control extends BaseModel {
      */
     @Getter
     @Setter
+    @Column
     private Date fecha;
 
     /**
@@ -24,6 +26,7 @@ public class Control extends BaseModel {
      */
     @Getter
     @Setter
+    @Column
     private Date ProximoControl;
 
     /**
@@ -31,6 +34,7 @@ public class Control extends BaseModel {
      */
     @Getter
     @Setter
+    @Column
     private Double temperatura;
 
     /**
@@ -38,6 +42,7 @@ public class Control extends BaseModel {
      */
     @Getter
     @Setter
+    @Column
     private Double peso;
 
     /**
@@ -45,6 +50,7 @@ public class Control extends BaseModel {
      */
     @Getter
     @Setter
+    @Column
     private Double altura;
 
     /**
@@ -52,6 +58,7 @@ public class Control extends BaseModel {
      */
     @Getter
     @Setter
+    @Column
     private String diagnostico;
 
     /**
@@ -59,6 +66,7 @@ public class Control extends BaseModel {
      */
     @Getter
     @Setter
+    @Column
     private Integer nota;
 
     /**
@@ -66,6 +74,15 @@ public class Control extends BaseModel {
      */
     @Getter
     @Setter
+    @Column
     private List<Examen> examenes[];
+
+    /**
+     * Veterinario
+     */
+    @Getter
+    @Setter
+    @Column
+    private Persona veterinario;
 
 }

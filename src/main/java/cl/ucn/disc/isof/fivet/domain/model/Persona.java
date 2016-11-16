@@ -52,6 +52,7 @@ public class Persona extends BaseModel {
      */
     @Getter
     @NotNull
+    @Column
     private Tipo tipo;
 
     /**
@@ -60,6 +61,7 @@ public class Persona extends BaseModel {
     @Getter
     @ManyToMany
     @OrderBy("numero")
+    @Column
     private List<Paciente> pacientes;
 
     /**
@@ -67,6 +69,7 @@ public class Persona extends BaseModel {
      */
     @Getter
     @Setter
+    @Column
     private String direccion;
 
     /**
@@ -74,6 +77,7 @@ public class Persona extends BaseModel {
      */
     @Getter
     @Setter
+    @Column
     private String fijo;
 
     /**
@@ -81,6 +85,7 @@ public class Persona extends BaseModel {
      */
     @Getter
     @Setter
+    @Column
     private String movil;
 
     /**
@@ -88,6 +93,7 @@ public class Persona extends BaseModel {
      */
     @Getter
     @Setter
+    @Column
     private String email;
 
     /**
@@ -100,14 +106,5 @@ public class Persona extends BaseModel {
         @EnumValue("Veterinario")
         VETERINARIO,
     }
-
-    /**
-     * Controles
-     */
-    @Getter
-    @Setter
-    @OneToMany
-    @OrderBy("fecha")
-    private List<Control> controles;
 
 }

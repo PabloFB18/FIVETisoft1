@@ -70,6 +70,7 @@ public class Paciente extends BaseModel {
      */
     @Getter
     @Setter
+    @Column
     private String color;
 
     /**
@@ -93,6 +94,7 @@ public class Paciente extends BaseModel {
     @Setter
     @OneToMany
     @OrderBy("fecha")
+    @Column
     private List<Control> controles;
 
 }
