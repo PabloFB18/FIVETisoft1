@@ -25,6 +25,7 @@ public class Paciente extends BaseModel {
      * Numero de la ficha
      */
     @Getter
+    @Setter
     @Column
     private Integer numero;
 
@@ -91,6 +92,8 @@ public class Paciente extends BaseModel {
      * Controles
      */
     @Getter
+    @Setter
+    @ManyToMany
     @OrderBy("fecha")
     @Column
     private List<Control> controles;

@@ -1,7 +1,9 @@
 package cl.ucn.disc.isof.fivet.domain.model;
 
+import com.durrutia.ebean.BaseModel;
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Date;
@@ -14,13 +16,14 @@ import java.util.Date;
 @Builder
 @Entity
 @Table
-public class Examen {
+public class Examen extends BaseModel {
 
     /**
      * Nombre
      */
     @Getter
     @Setter
+    @Column
     private String nombre;
 
     /**
@@ -28,6 +31,7 @@ public class Examen {
      */
     @Getter
     @Setter
+    @Column
     private Date fecha;
 
     /**
@@ -35,5 +39,6 @@ public class Examen {
      */
     @Getter
     @Setter
+    @Column
     private String resultado;
 }

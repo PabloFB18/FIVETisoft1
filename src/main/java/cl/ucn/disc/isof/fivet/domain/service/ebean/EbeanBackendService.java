@@ -1,6 +1,7 @@
 package cl.ucn.disc.isof.fivet.domain.service.ebean;
 
 import cl.ucn.disc.isof.fivet.domain.model.Control;
+import cl.ucn.disc.isof.fivet.domain.model.Examen;
 import cl.ucn.disc.isof.fivet.domain.model.Paciente;
 import cl.ucn.disc.isof.fivet.domain.model.Persona;
 import cl.ucn.disc.isof.fivet.domain.service.BackendService;
@@ -14,6 +15,7 @@ import com.durrutia.ebean.BaseModel;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -50,6 +52,9 @@ public class EbeanBackendService implements BackendService {
 
         config.addClass(Paciente.class);
         config.addClass(Paciente.Sexo.class);
+
+        config.addClass(Control.class);
+        config.addClass(Examen.class);
 
         // http://ebean-orm.github.io/docs/query/autotune
         config.getAutoTuneConfig().setProfiling(false);
@@ -127,9 +132,8 @@ public class EbeanBackendService implements BackendService {
     @Override
     public List<Control> getControlesVeterinario(String rutVeterinario) {
         List<Control> controles = Lists.newArrayList();
-        for (Control control:this.ebeanServer.find(Control.class).findList()
-             ) {
-            if (control.getVeterinario().getRut().equals(rutVeterinario)){
+        for (Control control:this.ebeanServer.find(Control.class).findList()) {
+            if (control.getRutVeterinario().equals(rutVeterinario)){
                 controles.add(control);
             }
         }

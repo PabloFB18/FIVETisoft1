@@ -1,15 +1,19 @@
 package cl.ucn.disc.isof.fivet.domain.service.ebean;
 
+import cl.ucn.disc.isof.fivet.domain.model.Control;
 import cl.ucn.disc.isof.fivet.domain.model.Paciente;
 import cl.ucn.disc.isof.fivet.domain.model.Persona;
 import cl.ucn.disc.isof.fivet.domain.service.BackendService;
 import com.google.common.base.Stopwatch;
 import lombok.extern.slf4j.Slf4j;
+import org.h2.util.ToDateParser;
+import org.intellij.lang.annotations.Flow;
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 import org.junit.rules.Timeout;
 import org.junit.runners.MethodSorters;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Clase de testing del {@link BackendService}.
@@ -154,6 +158,7 @@ public class TestEbeanBackendService {
             Assert.assertNotNull("Pacientes null", pacientes);
             Assert.assertTrue("Pacientes != 0", pacientes.size() == 0);
         }
+
         //test get pacientespor nombre vacio
         {
             final List<Paciente> pacientes = backendService.getPacientesPorNombre(nombre);
@@ -215,6 +220,65 @@ public class TestEbeanBackendService {
             final List<Paciente> pacientes = backendService.getPacientesPorNombre("otro");
             Assert.assertNotNull("Pacientes null", pacientes);
             Assert.assertTrue("Pacientes != 0", pacientes.size() == 0);
+        }
+
+    }
+
+    /**
+     * Test del control
+     */
+    @Test
+    public void testControl() {
+
+        final String rutVeterinario = "1-1";
+        final Integer numeroPaciente = 112;
+        final Date fecha = new Date();
+
+        //test get controles veterinario por rut veterinario vacio
+        {
+            final List<Control> controles = backendService.getControlesVeterinario(rutVeterinario);
+            Assert.assertNotNull("Pacientes null", controles);
+            Assert.assertTrue("Pacientes != 0", controles.size() == 0);
+        }
+
+        //test agregar control
+        {
+            final Paciente paciente = Paciente.builder()
+                    .numero(numeroPaciente)
+                    .nombre("Spike")
+                    .especie("Pastor Aleman")
+                    .sexo(Paciente.Sexo.MACHO)
+                    .color("verde")
+                    .controles(new ArrayList<>())
+                    .build();
+
+            paciente.insert();
+
+            final Control control = Control.builder()
+                    .fecha(fecha)
+                    .temperatura(1.1)
+                    .peso(23.0)
+                    .altura(50.0)
+                    .rutVeterinario(rutVeterinario)
+                    .build();
+
+            backendService.agregarControl(control, numeroPaciente);
+
+            //revisar que el control sea el mismo y que este en el mismo paciente
+            Paciente pacienteBD = backendService.getPaciente(numeroPaciente);
+            log.debug("Control founded: {}", pacienteBD.getControles().get(0));
+            Assert.assertNotNull("no se encontro el control", pacienteBD.getControles().get(0));
+            Assert.assertNotNull("Objeto sin id", pacienteBD.getControles().get(0).getId());
+            Assert.assertEquals("fecha control diferente", fecha, pacienteBD.getControles().get(0).getFecha());
+        }
+
+        //test get controles veterinario por rut veterinario
+        {
+            final List<Control> controles = backendService.getControlesVeterinario(rutVeterinario);
+            Assert.assertNotNull("no se encontro controles", controles);
+            Assert.assertNotNull("No hay contrles", controles.get(0));
+            Assert.assertTrue("Controles != 1", controles.size() == 1);
+            Assert.assertEquals("fecha control diferente", fecha, controles.get(0).getFecha());
         }
 
     }

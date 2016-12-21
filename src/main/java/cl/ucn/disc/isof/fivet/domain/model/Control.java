@@ -3,10 +3,7 @@ package cl.ucn.disc.isof.fivet.domain.model;
 import lombok.*;
 import com.durrutia.ebean.BaseModel;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -82,8 +79,8 @@ public class Control extends BaseModel {
     @Getter
     @Setter
     @Column
-    @OneToMany
-    private List<Examen> examenes[];
+    @ManyToMany
+    private List<Examen> examenes;
 
     /**
      * Veterinario
@@ -91,6 +88,6 @@ public class Control extends BaseModel {
     @Getter
     @Setter
     @Column
-    private Persona veterinario;
+    private String rutVeterinario;
 
 }
