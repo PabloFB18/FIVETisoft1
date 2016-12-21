@@ -5,6 +5,7 @@ import lombok.Setter;
 import com.durrutia.ebean.BaseModel;
 
 import javax.persistence.Column;
+import javax.persistence.OneToMany;
 import java.util.Date;
 import java.util.List;
 
@@ -75,6 +76,7 @@ public class Control extends BaseModel {
     @Getter
     @Setter
     @Column
+    @OneToMany
     private List<Examen> examenes[];
 
     /**

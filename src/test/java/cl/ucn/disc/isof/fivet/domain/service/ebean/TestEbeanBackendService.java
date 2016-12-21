@@ -70,6 +70,7 @@ public class TestEbeanBackendService {
 
         final String rut = "1-1";
         final String nombre = "Este es mi nombre";
+        //final String email = "mi.email@algo.algo";
 
         // Insert into backend
         {
@@ -78,6 +79,7 @@ public class TestEbeanBackendService {
                     .rut(rut)
                     .password("durrutia123")
                     .tipo(Persona.Tipo.CLIENTE)
+                    //.email(email)
                     .build();
 
             persona.insert();
