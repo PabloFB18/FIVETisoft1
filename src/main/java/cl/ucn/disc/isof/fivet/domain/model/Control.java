@@ -1,17 +1,23 @@
 package cl.ucn.disc.isof.fivet.domain.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import com.durrutia.ebean.BaseModel;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by pablofb on 09-11-16.
  */
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
+@Table
 public class Control extends BaseModel {
 
     /**

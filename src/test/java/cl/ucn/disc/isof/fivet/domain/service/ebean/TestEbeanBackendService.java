@@ -1,5 +1,6 @@
 package cl.ucn.disc.isof.fivet.domain.service.ebean;
 
+import cl.ucn.disc.isof.fivet.domain.model.Paciente;
 import cl.ucn.disc.isof.fivet.domain.model.Persona;
 import cl.ucn.disc.isof.fivet.domain.service.BackendService;
 import com.google.common.base.Stopwatch;
@@ -7,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.*;
 import org.junit.rules.Timeout;
 import org.junit.runners.MethodSorters;
+
+import java.util.List;
 
 /**
  * Clase de testing del {@link BackendService}.
@@ -136,5 +139,84 @@ public class TestEbeanBackendService {
 
     }
 
+    /**
+     * Test del paciente
+     */
+    @Test
+    public void testPaciente() {
+
+        final Integer numero = 11;
+        final String nombre = "Spike";
+
+        //test get pacientes vacio
+        {
+            final List<Paciente> pacientes = backendService.getPacientes();
+            Assert.assertNotNull("Pacientes null", pacientes);
+            Assert.assertTrue("Pacientes != 0", pacientes.size() == 0);
+        }
+        //test get pacientespor nombre vacio
+        {
+            final List<Paciente> pacientes = backendService.getPacientesPorNombre(nombre);
+            Assert.assertNotNull("Pacientes null", pacientes);
+            Assert.assertTrue("Pacientes != 0", pacientes.size() == 0);
+        }
+
+        // Insert into backend
+        {
+            final Paciente paciente = Paciente.builder()
+                    .numero(numero)
+                    .nombre(nombre)
+                    .especie("Pastor Aleman")
+                    .sexo(Paciente.Sexo.MACHO)
+                    .color("verde")
+                    .build();
+
+            paciente.insert();
+
+            log.debug("Paciente to insert: {}", paciente);
+            Assert.assertNotNull("Objeto sin id", paciente.getId());
+        }
+
+        //test get pacientes
+        {
+            final List<Paciente> pacientes = backendService.getPacientes();
+            Assert.assertNotNull("Pacientes null", pacientes);
+            Assert.assertNotNull("No hay pacientes", pacientes.get(0));
+            Assert.assertTrue("Pacientes != 1", pacientes.size() == 1);
+            Assert.assertEquals("Numeros distintos", numero, pacientes.get(0).getNumero());
+        }
+
+        //test get paciente por numeroPaciente
+        {
+            final Paciente paciente = backendService.getPaciente(numero);
+            log.debug("Paciente founded: {}", paciente);
+            Assert.assertNotNull("Paciente null", paciente);
+            Assert.assertNotNull("Objeto sin id", paciente.getId());
+            Assert.assertEquals("Numeros distintos", numero, paciente.getNumero());
+        }
+
+        //test get paciente por numeroPaciente con numero falso
+        {
+            final Paciente paciente = backendService.getPaciente(22);
+            Assert.assertNull("Se encontro un paciente", paciente);
+        }
+
+        //test get pacientes por nombre
+        {
+            final List<Paciente> pacientes = backendService.getPacientesPorNombre(nombre);
+            Assert.assertNotNull("Pacientes null", pacientes);
+            Assert.assertNotNull("No hay pacientes", pacientes.get(0));
+            Assert.assertTrue("Pacientes != 1", pacientes.size() == 1);
+            Assert.assertEquals("Nombres distintos", nombre, pacientes.get(0).getNombre());
+        }
+
+        //test get pacientes por nombre con nombre falso
+        {
+            final List<Paciente> pacientes = backendService.getPacientesPorNombre("otro");
+            Assert.assertNotNull("Pacientes null", pacientes);
+            Assert.assertTrue("Pacientes != 0", pacientes.size() == 0);
+        }
+
+    }
 
 }

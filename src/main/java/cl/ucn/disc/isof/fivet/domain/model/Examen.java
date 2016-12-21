@@ -1,13 +1,19 @@
 package cl.ucn.disc.isof.fivet.domain.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
  * Created by pablofb on 09-11-16.
  */
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
+@Table
 public class Examen {
 
     /**

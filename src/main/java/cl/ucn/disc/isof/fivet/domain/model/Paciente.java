@@ -91,8 +91,6 @@ public class Paciente extends BaseModel {
      * Controles
      */
     @Getter
-    @Setter
-    //@OneToMany
     @OrderBy("fecha")
     @Column
     private List<Control> controles;
