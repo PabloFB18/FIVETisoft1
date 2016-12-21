@@ -70,7 +70,7 @@ public class TestEbeanBackendService {
 
         final String rut = "1-1";
         final String nombre = "Este es mi nombre";
-        //final String email = "mi.email@algo.algo";
+        final String email = "mi.email@gmail.com";
 
         // Insert into backend
         {
@@ -79,7 +79,7 @@ public class TestEbeanBackendService {
                     .rut(rut)
                     .password("durrutia123")
                     .tipo(Persona.Tipo.CLIENTE)
-                    //.email(email)
+                    .email(email)
                     .build();
 
             persona.insert();
@@ -88,27 +88,50 @@ public class TestEbeanBackendService {
             Assert.assertNotNull("Objeto sin id", persona.getId());
         }
 
-        // Get from backend v1
+        // Get persona por rut from backend
         {
             final Persona persona = backendService.getPersona(rut);
             log.debug("Persona founded: {}", persona);
             Assert.assertNotNull("Can't find Persona", persona);
             Assert.assertNotNull("Objeto sin id", persona.getId());
-            Assert.assertEquals("Nombre distintos!", rut, persona.getRut());//Assert.assertEquals("Nombre distintos!", rut, persona.getNombre());
+            Assert.assertEquals("Ruts distintos!", rut, persona.getRut());
             Assert.assertNotNull("Pacientes null", persona.getPacientes());
             Assert.assertTrue("Pacientes != 0", persona.getPacientes().size() == 0);
 
             // Update nombre
-            persona.setNombre(nombre);//persona.setNombre(nombre + nombre);
+            persona.setNombre(nombre);
             persona.update();
         }
 
-        // Get from backend v2
+        // Get persona por rut nuevo nombre from backend
         {
             final Persona persona = backendService.getPersona(rut);
             log.debug("Persona founded: {}", persona);
             Assert.assertNotNull("Can't find Persona", persona);
             Assert.assertEquals("Nombres distintos!", nombre, persona.getNombre());
+        }
+
+        // Get persona por rut from backend ingresando otro rut
+        {
+            final Persona persona = backendService.getPersona("2-2");
+            Assert.assertNull("found Persona", persona);
+        }
+
+        // Get persona por email from backend
+        {
+            final Persona persona = backendService.getPersona(email);
+            log.debug("Persona founded: {}", persona);
+            Assert.assertNotNull("Can't find Persona", persona);
+            Assert.assertNotNull("Objeto sin id", persona.getId());
+            Assert.assertEquals("Emails distintos!", email, persona.getEmail());
+            Assert.assertNotNull("Pacientes null", persona.getPacientes());
+            Assert.assertTrue("Pacientes != 0", persona.getPacientes().size() == 0);
+        }
+
+        // Get persona por email from backend ingresando otro email
+        {
+            final Persona persona = backendService.getPersona("otro.email@gmail.com");
+            Assert.assertNull("Can't find Persona", persona);
         }
 
     }
